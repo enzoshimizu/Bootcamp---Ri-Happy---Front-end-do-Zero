@@ -2,7 +2,7 @@
 const pokemonList = document.getElementById('pokemonList');
 const loadMoreButton = document.getElementById('loadMore');
 const maxRecords = 151;
-let limit =5;
+let limit = 5;
 let offset = 0;
 
 function convertPokemonTypesToLi(pokemonTypes) {
@@ -10,7 +10,7 @@ function convertPokemonTypesToLi(pokemonTypes) {
 };
 
 function convertPokemonToLi(pokemon) {
-    return `<li class="pokemon ${pokemon.type}">
+    return `<li class="pokemon ${pokemon.type}" onclick="goToDetails(${pokemon.number})">
                 <span class="number">#${pokemon.number}</span>
                 <span class="name">${pokemon.name}</span>
                 <div class="detail">
@@ -29,16 +29,21 @@ function loadPokemonItens(offset, limit) {
     });
 };
 
+function goToDetails(pokemonNumber){
+    window.location.href = `pokemon_detail.html?number=${pokemonNumber}`;
+}
+
+// Main
 loadMoreButton.addEventListener('click', () => {
     offset += limit;
 
     const qtRecordNextPage = offset + limit;
 
-    if (qtRecordNextPage >= maxRecords){
-        limit += maxRecords - qtRecordNextPage;  
+    if (qtRecordNextPage >= maxRecords) {
+        limit += maxRecords - qtRecordNextPage;
         loadMoreButton.parentElement.removeChild(loadMoreButton);
     };
-    
+
     loadPokemonItens(offset, limit);
 })
 
